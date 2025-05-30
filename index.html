@@ -1,62 +1,307 @@
-<!-- public/index.html -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>@indraxxiv – Criação de Sites</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Indraxxiv - Portfólio</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #1e1e1e, #121212);
+      color: #f0f0f0;
+      margin: 0;
+      padding: 0;
+      transition: background 0.5s, color 0.5s;
+    }
+    body.light-mode {
+      background: linear-gradient(135deg, #f9f9f9, #e0e0e0);
+      color: #333;
+    }
+    header {
+      background-color: #333;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+      position: relative;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.5em;
+      color: #00ffcc;
+      animation: fadeInDown 1s ease;
+    }
+    header p {
+      margin: 5px 0 0;
+      font-size: 1.2em;
+      color: #aaa;
+      animation: fadeIn 2s ease;
+    }
+    .toggle-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: #00ffcc;
+      color: #000;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .toggle-btn:hover {
+      background-color: #00ddbb;
+    }
+    main {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+    }
+    section {
+      margin-bottom: 40px;
+      animation: fadeIn 2s ease;
+    }
+    h2 {
+      border-bottom: 2px solid #00ffcc;
+      padding-bottom: 5px;
+      margin-bottom: 15px;
+      color: #00ffcc;
+    }
+    .portfolio {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .project {
+      background-color: #222;
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 0 15px rgba(0,255,204,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .project:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(0,255,204,0.3);
+    }
+    form {
+      background-color: #222;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,255,204,0.1);
+    }
+    form label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    form input, form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: none;
+      background-color: #333;
+      color: #fff;
+    }
+    form button {
+      background-color: #00ffcc;
+      color: #000;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    form button:hover {
+      background-color: #00ddbb;
+    }
+    .success-message {
+      background-color: #004d40;
+      color: #fff;
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: 10px;
+      display: none;
+    }
+    footer {
+      background-color: #111;
+      text-align: center;
+      padding: 15px;
+      font-size: 0.9em;
+      color: #777;
+    }
+    a {
+      color: #00ffcc;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* Light mode adjustments */
+    body.light-mode header {
+      background-color: #ddd;
+    }
+    body.light-mode .project, body.light-mode form, body.light-mode .technologies {
+      background-color: #fff;
+      color: #000;
+    }
+    body.light-mode h2 {
+      border-bottom-color: #00aa99;
+      color: #00aa99;
+    }
+    body.light-mode a {
+      color: #007777;
+    }
+    body.light-mode footer {
+      background-color: #ccc;
+      color: #333;
+    }
+
+    /* Technologies section */
+    .technologies {
+      background-color: #222;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,255,204,0.1);
+    }
+    .technologies h2 {
+      color: #00ffcc;
+      margin-bottom: 15px;
+      border-bottom: 2px solid #00ffcc;
+      padding-bottom: 5px;
+    }
+    .tech-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+    }
+    .tech-item {
+      background-color: #333;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-weight: bold;
+      color: #00ffcc;
+      box-shadow: 0 0 10px rgba(0,255,204,0.2);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .tech-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 15px rgba(0,255,204,0.4);
+    }
+
+    /* Scroll suave */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Animations */
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
 </head>
 <body>
   <header>
-    <h1>@indraxxiv</h1>
-    <p>Criação de sites com estilo, animação e identidade.</p>
+    <h1>Indraxxiv</h1>
+    <p>Desenvolvedor web, criativo e apaixonado por transformar ideias em realidade 🔥🚀</p>
+    <button class="toggle-btn" onclick="toggleMode()">🌙 / ☀️</button>
   </header>
-
   <main>
-    <section class="sobre">
-      <h2>Sobre mim</h2>
-      <p>Fala aí! Eu sou o <strong>@indraxxiv</strong>, um cara que manda bem na criação de sites, com aquele toque único. Gosto de transformar ideias simples em páginas estilosas, funcionais e cheias de personalidade.</p>
-      <p>Seja pra mostrar um perfil, contar uma história, divulgar um projeto ou montar algo totalmente novo, eu consigo fazer virar site real — bonito, leve e responsivo.</p>
+    <section id="sobre">
+      <h2>Sobre Mim</h2>
+      <p>Sou o Indraxxiv, apaixonado por tecnologia, design e inovação. Crio sites que se destacam e ajudam os negócios a crescer online!</p>
     </section>
-
-    <section class="depoimento">
-      <h2>Como comecei</h2>
-      <p>Comecei na brincadeira, montando site pros amigos, testando umas ideias... e hoje tô aqui, criando páginas com estilo próprio e ajudando quem quer tirar um projeto do papel. Cada site tem um pouco de mim, e eu curto dar atenção aos detalhes. Se for pra fazer, vai ser bem feito.</p>
+    <section id="portfolio">
+      <h2>Portfólio</h2>
+      <div class="portfolio">
+        <div class="project">
+          <h3>Site Moderno de Portfólio</h3>
+          <p>Layout detalhado e profissional pra quem quer se destacar na web.</p>
+        </div>
+        <div class="project">
+          <h3>Landing Page para Negócios Locais</h3>
+          <p>detalhado e eficaz pra atrair clientes na sua região.</p>
+        </div>
+        <div class="project">
+          <h3>Blog Pessoal</h3>
+          <p>Perfeito pra compartilhar ideias, histórias e se conectar com o público.</p>
+        </div>
+      </div>
     </section>
-
-    <section class="tecnologias">
-      <h2>Tecnologias que uso</h2>
+    <section id="servicos">
+      <h2>Serviços</h2>
       <ul>
-        <li>HTML5 / CSS3 / JavaScript</li>
-        <li>Animações com CSS</li>
-        <li>Deploy com Vercel / GitHub Pages</li>
-        <li>Estruturação limpa de código</li>
-        <li>E aprendendo mais a cada projeto</li>
+        <li>Criação de sites responsivos e modernos</li>
+        <li>Personalização de portfólios</li>
+        <li>Manutenção e otimização de sites</li>
+        <li>Consultoria para negócios digitais</li>
       </ul>
     </section>
-    <footer>
-      <p>Criado por <strong>@indraxxiv</strong> – (11) 98985-4148</p>
-      <p>Quer um site também? Me chama no WhatsApp!</p>
-    </footer>
+    <section id="technologies" class="technologies">
+      <h2>Tecnologias que Domino</h2>
+      <div class="tech-list">
+        <div class="tech-item">HTML5</div>
+        <div class="tech-item">CSS3</div>
+        <div class="tech-item">JavaScript</div>
+        <div class="tech-item">Node.js</div>
+        <div class="tech-item">React</div>
+        <div class="tech-item">Next.js</div>
+        <div class="tech-item">Git</div>
+        <div class="tech-item">Figma</div>
+        <div class="tech-item">Firebase</div>
+      </div>
+    </section>
+    <section id="contato">
+      <h2>Contato</h2>
+      <form id="contactForm">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required>
+        <label for="email">E-mail:</label>
+        <input type="email" id="email" name="email" required>
+        <label for="mensagem">Mensagem:</label>
+        <textarea id="mensagem" name="mensagem" rows="5" required></textarea>
+        <button type="submit">Enviar</button>
+        <div class="success-message" id="successMessage">Mensagem enviada com sucesso!</div>
+      </form>
+    </section>
   </main>
+  <footer>
+    &copy; 2025 Indraxxiv. Todos os direitos garantidos.
+  </footer>
+  <script>
+    function toggleMode() {
+      document.body.classList.toggle('light-mode');
+    }
 
-  <script src="script.js"></script>
+    // Mensagem de sucesso simulada
+    const form = document.getElementById('contactForm');
+    const successMessage = document.getElementById('successMessage');
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      successMessage.style.display = 'block';
+      form.reset();
+    });
+
+    // Scroll Reveal simples
+    window.addEventListener('scroll', () => {
+      const techSection = document.getElementById('technologies');
+      const sectionPos = techSection.getBoundingClientRect().top;
+      const screenPos = window.innerHeight / 1.2;
+      if (sectionPos < screenPos) {
+        techSection.style.opacity = 1;
+        techSection.style.transform = 'translateY(0)';
+      }
+    });
+
+    // Inicializar tecnologias invisíveis
+    document.getElementById('technologies').style.opacity = 0;
+    document.getElementById('technologies').style.transform = 'translateY(50px)';
+  </script>
 </body>
-</html
-// Animação suave ao rolar a página
-document.addEventListener("DOMContentLoaded"
-<!-- Seção de Testemunhos -->
-<section class="testemunhos">
-  <h2>O que estão dizendo</h2>
-  <div class="testemunho">
-    <p>"Trabalhei com o @indraxxiv em meu projeto de portfólio, e o resultado superou minhas expectativas! O site ficou lindo e fácil de navegar."</p>
-    <p><strong>– João Silva, Designer</strong></p>
-  </div>
-  
-  <div class="testemunho">
-    <p>"Indico o trabalho dele para quem quer algo mais do que apenas um site. Ele realmente se importa com o que está criando!"</p>
-    <p><strong>– Maria Oliveira,desenvolvedora </strong
-      <div class="testemunho"><p/>um garoto jovem, mas promissor. é simpático, e tem um futuro grande pela frente. </p>
-  </div>
-</section>
+</html>
